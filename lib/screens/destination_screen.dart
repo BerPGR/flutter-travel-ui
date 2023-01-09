@@ -15,6 +15,15 @@ class DestinationsScreen extends StatefulWidget {
 }
 
 class _DestinationsScreenState extends State<DestinationsScreen> {
+  Text _buildRatingStars(int rating) {
+    String stars = '';
+    for (int i = 0; i < rating; i++) {
+      stars += '⭐ ';
+    }
+
+    return Text(stars);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,6 +121,7 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
         ),
         Expanded(
           child: ListView.builder(
+            padding: EdgeInsets.only(top: 10, bottom: 15),
             itemCount: widget.destination.activities.length,
             itemBuilder: (BuildContext context, int index) {
               Activity activity = widget.destination.activities[index];
@@ -168,10 +178,12 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
                               activity.type,
                               style: TextStyle(color: Colors.grey),
                             ),
+                            _buildRatingStars(activity.rating),
                             SizedBox(height: 10),
                             Row(
                               children: [
                                 Container(
+                                  padding: EdgeInsets.all(5),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     color: Theme.of(context).accentColor,
@@ -196,7 +208,20 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
                             )
                           ]),
                     ),
-                  )
+                  ),
+                  Positioned(
+                    left: 20,
+                    top: 15,
+                    bottom: 15,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image(
+                        width: 110,
+                        image: AssetImage(activity.imageUrl),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
                 ],
               );
             },
