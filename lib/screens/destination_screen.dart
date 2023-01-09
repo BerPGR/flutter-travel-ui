@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travel_ui/models/activity_model.dart';
 import 'package:travel_ui/models/destination_model.dart';
 
 class DestinationsScreen extends StatefulWidget {
@@ -108,7 +109,99 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
                   size: 25,
                 )),
           ],
-        )
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: widget.destination.activities.length,
+            itemBuilder: (BuildContext context, int index) {
+              Activity activity = widget.destination.activities[index];
+              return Stack(
+                children: [
+                  Container(
+                    margin: EdgeInsets.fromLTRB(40, 5, 20, 5),
+                    height: 170,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(100, 20, 20, 20),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 120,
+                                  child: Text(
+                                    activity.name,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      '\$${activity.price}',
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Text(
+                                      'per pax',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            Text(
+                              activity.type,
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                              children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).accentColor,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  width: 70,
+                                  child: Text(activity.startTimes[0]),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).accentColor,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  width: 70,
+                                  child: Text(activity.startTimes[1]),
+                                )
+                              ],
+                            )
+                          ]),
+                    ),
+                  )
+                ],
+              );
+            },
+          ),
+        ),
       ]),
     );
   }
